@@ -81,3 +81,4 @@ class _DistanceLabel {
 
   _DistanceLabel(this.distance, this.label);
 }
+

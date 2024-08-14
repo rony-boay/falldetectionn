@@ -1,6 +1,6 @@
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:falldetectionn1/NotificationService.dart';
 import 'package:falldetectionn1/SplashScreen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +16,6 @@ import 'knn.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await AndroidAlarmManager.initialize();
   await NotificationService.init(); // Initialize NotificationService
 
   runApp(MyApp());
@@ -100,15 +99,15 @@ class _LoginFormState extends State<LoginForm> {
               labelStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.email, color: Colors.white),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               filled: true,
@@ -124,15 +123,15 @@ class _LoginFormState extends State<LoginForm> {
               labelStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.lock, color: Colors.white),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               filled: true,
@@ -144,9 +143,15 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 16.0),
           ElevatedButton(
             onPressed: _login,
+            style: ElevatedButton.styleFrom(
+              backgroundColor:
+                  Colors.black, // Set the background color to black
+              foregroundColor: Colors.white, // Set the text color to white
+              side: BorderSide(color: Colors.white), // Add a white border
+            ),
             child: Text(
               'Login',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           if (_errorMessage != null)
@@ -157,17 +162,29 @@ class _LoginFormState extends State<LoginForm> {
                 style: TextStyle(color: Colors.red),
               ),
             ),
+          SizedBox(
+            height: 10,
+          ),
           Container(
             child: Text(
               'Don\'t have an account?',
               style: TextStyle(color: Colors.white),
             ),
           ),
+          SizedBox(
+            height: 10,
+          ),
           ElevatedButton(
             onPressed: widget.onToggle,
+            style: ElevatedButton.styleFrom(
+              backgroundColor:
+                  Colors.black, // Set the background color to black
+              foregroundColor: Colors.white, // Set the text color to white
+              side: BorderSide(color: Colors.white), // Add a white border
+            ),
             child: Text(
               'Register here',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ],
@@ -223,15 +240,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
               labelStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.person, color: Colors.white),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               filled: true,
@@ -247,15 +264,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
               labelStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.phone, color: Colors.white),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               filled: true,
@@ -271,15 +288,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
               labelStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.email, color: Colors.white),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               filled: true,
@@ -295,15 +312,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
               labelStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.lock, color: Colors.white),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(0.0),
                 borderSide: BorderSide(color: Colors.white),
               ),
               filled: true,
@@ -313,10 +330,24 @@ class _RegistrationFormState extends State<RegistrationForm> {
             style: TextStyle(color: Colors.white),
           ),
           SizedBox(height: 16.0),
+          // ElevatedButton(
+          //   onPressed: _register,
+          //   child: Text('Register'),
+          // ),
           ElevatedButton(
             onPressed: _register,
-            child: Text('Register'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor:
+                  Colors.black, // Set the background color to black
+              foregroundColor: Colors.white, // Set the text color to white
+              side: BorderSide(color: Colors.white), // Add a white border
+            ),
+            child: Text(
+              'Register',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
+
           if (_errorMessage != null)
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
@@ -325,9 +356,31 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 style: TextStyle(color: Colors.red),
               ),
             ),
-          TextButton(
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            child: Text(
+              'Already have an account?',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+
+          SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(
             onPressed: widget.onToggle,
-            child: Text('Already have an account? Login here.'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor:
+                  Colors.black, // Set the background color to black
+              foregroundColor: Colors.white, // Set the text color to white
+              side: BorderSide(color: Colors.white), // Add a white border
+            ),
+            child: Text(
+              'Login here',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -376,40 +429,34 @@ class _ButtonScreenState extends State<ButtonScreen> {
   String? _userEmail;
 
   StreamSubscription? _userDetailsSubscription;
-
   StreamSubscription? _fallHistorySubscription;
   List<Map<String, dynamic>> _fallHistory = [];
-
-  void _fetchUserDetails() {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      _userDetailsSubscription = FirebaseDatabase.instance
-          .ref()
-          .child('users')
-          .child(user.uid)
-          .onValue
-          .listen((event) {
-        final data = event.snapshot.value as Map<dynamic, dynamic>?;
-        setState(() {
-          _userName = data?['name'];
-          _userContact = data?['contact'];
-          _userEmail = data?['email'];
-        });
-      });
-    }
-  }
 
   @override
   void initState() {
     super.initState();
     _fetchUserDetails();
+    _fetchFallHistory();
+    _fetchFCMToken(); // Fetch FCM token
   }
 
-  @override
-  void dispose() {
-    _userDetailsSubscription?.cancel();
-    _fallHistorySubscription?.cancel();
-    super.dispose();
+  void _fetchUserDetails() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      _userDetailsSubscription = _databaseReference
+          .child('users')
+          .child(user.uid)
+          .onValue
+          .listen((event) {
+        final data = event.snapshot.value as Map<dynamic, dynamic>?;
+
+        setState(() {
+          _userName = data?['name'] as String?;
+          _userContact = data?['contact'] as String?;
+          _userEmail = data?['email'] as String?;
+        });
+      });
+    }
   }
 
   void _fetchFallHistory() {
@@ -418,13 +465,9 @@ class _ButtonScreenState extends State<ButtonScreen> {
       final data = event.snapshot.value as Map<dynamic, dynamic>?;
 
       if (data != null) {
-        print('Fetched Data: $data'); // Log the data to see its structure
-
         List<Map<String, dynamic>> fallHistory = [];
 
         data.forEach((key, value) {
-          print('Fetched Value: $value'); // Log each value
-
           final timeString = value['timestamp'] as String?;
           final fallType = value['fallType'] as String? ?? 'Unknown';
 
@@ -438,7 +481,6 @@ class _ButtonScreenState extends State<ButtonScreen> {
                 'fall_type': fallType,
               });
             } catch (e) {
-              // Handle parsing error
               print('Error parsing date: $e');
             }
           }
@@ -451,95 +493,130 @@ class _ButtonScreenState extends State<ButtonScreen> {
     });
   }
 
+  void _fetchFCMToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    if (token != null) {
+      print("FCM Token: $token");
+    }
+  }
+
+  @override
+  void dispose() {
+    _userDetailsSubscription?.cancel();
+    _fallHistorySubscription?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Color.fromARGB(255, 185, 182, 182), // Background color of the screen
+      backgroundColor: Color.fromARGB(255, 185, 182, 182),
       body: Center(
         child: SingleChildScrollView(
-          child: Column(children: [
-            if (_userName != null && _userContact != null && _userEmail != null)
-              Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
+          child: Column(
+            children: [
+              if (_userName != null &&
+                  _userContact != null &&
+                  _userEmail != null)
+                Container(
+                  padding: EdgeInsets.all(20),
+                  margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Name: $_userName',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Contact: $_userContact',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Email: $_userEmail',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Name: $_userName',
-                      style: TextStyle(fontSize: 18),
+              SizedBox(
+                width: 200, // Set a fixed width for all buttons
+                height: 50, // Set a fixed height for all buttons
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Color.fromARGB(255, 32, 106, 243),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Remove rounded corners
                     ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Contact: $_userContact',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Email: $_userEmail',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
+                  ),
+                  child: Text('Profile'),
                 ),
               ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor:
-                    Color.fromARGB(255, 32, 106, 243), // Sky blue button color
+              SizedBox(height: 16.0),
+              SizedBox(
+                width: 200, // Set a fixed width for all buttons
+                height: 50, // Set a fixed height for all buttons
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Color.fromARGB(255, 32, 106, 243),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Remove rounded corners
+                    ),
+                  ),
+                  child: Text('Insight'),
+                ),
               ),
-              child: Text('Profile'),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor:
-                    Color.fromARGB(255, 32, 106, 243), // Sky blue button color
+              SizedBox(height: 16.0),
+              SizedBox(
+                width: 200, // Set a fixed width for all buttons
+                height: 50, // Set a fixed height for all buttons
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FallHistoryScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Color.fromARGB(255, 32, 106, 243),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Remove rounded corners
+                    ),
+                  ),
+                  child: Text('Fall History'),
+                ),
               ),
-              child: Text('Insight'),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => (FallHistoryScreen())),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor:
-                    Color.fromARGB(255, 32, 106, 243), // Sky blue button color
-              ),
-              child: Text('Fall History'),
-            ),
-          ]),
+            ],
+          ),
         ),
       ),
     );
@@ -667,14 +744,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _saveProfile() {
     // Save the profile information to Firebase or perform any other action
-    setState(() {
-      _isEditing = false;
-    });
+    setState(
+      () {
+        _isEditing = false;
+      },
+    );
   }
 
-  void _logout() {
-    // Handle logout logic here
-    Navigator.pop(context); // Or use FirebaseAuth to sign out
+  void _logout() async {
+    await FirebaseAuth.instance.signOut(); // Sign out from Firebase
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AuthenticationScreen(),
+      ), // Navigate to the login screen
+    );
   }
 }
 
@@ -694,7 +778,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _userName;
   String? _userContact;
   String? _userEmail;
-
   final NotificationService _notificationService = NotificationService();
 
   @override
@@ -702,7 +785,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _fetchFallHistory();
     _fetchUserDetails();
-    _fetchSensorData(); // Start fetching sensor data on init
     _startAutoRefresh();
   }
 
@@ -804,7 +886,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _startAutoRefresh() {
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      _fetchSensorData(); // Fetch new sensor data every 5 seconds
+      _fetchSensorData(); // Call the method to fetch new sensor data
     });
   }
 
@@ -812,7 +894,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _fallHistorySubscription?.cancel();
     _userDetailsSubscription?.cancel();
-    _sensorSubscription?.cancel(); // Cancel sensor data subscription
+    _sensorSubscription?.cancel(); // Cancel the sensor data subscription
     _timer?.cancel();
     super.dispose();
   }
@@ -982,29 +1064,25 @@ class _FallHistoryScreenState extends State<FallHistoryScreen> {
 
         List<Map<String, dynamic>> fallHistory = [];
 
-        data.forEach((userId, userFallData) {
-          if (userFallData is Map<dynamic, dynamic>) {
-            userFallData.forEach((key, value) {
-              print('Fetched Value: $value'); // Log each value
+        data.forEach((key, value) {
+          print('Fetched Value: $value'); // Log each value
 
-              final timestampString = value['timestamp'] as String?;
-              final fallType = value['fallType'] as String? ?? 'Unknown';
+          final timeString = value['timestamp'] as String?;
+          final fallType = value['fallType'] as String? ?? 'Unknown';
 
-              if (timestampString != null) {
-                try {
-                  final dateTime =
-                      DateFormat('dd-MM-yyyy HH:mm:ss').parse(timestampString);
-                  fallHistory.add({
-                    'date': DateFormat.yMMMd().format(dateTime),
-                    'time': DateFormat.jm().format(dateTime),
-                    'fall_type': fallType,
-                  });
-                } catch (e) {
-                  // Handle parsing error
-                  print('Error parsing date: $e');
-                }
-              }
-            });
+          if (timeString != null) {
+            try {
+              final dateTime =
+                  DateFormat('dd-MM-yyyy HH:mm:ss').parse(timeString);
+              fallHistory.add({
+                'date': DateFormat.yMMMd().format(dateTime),
+                'time': DateFormat.jm().format(dateTime),
+                'fall_type': fallType,
+              });
+            } catch (e) {
+              // Handle parsing error
+              print('Error parsing date: $e');
+            }
           }
         });
 

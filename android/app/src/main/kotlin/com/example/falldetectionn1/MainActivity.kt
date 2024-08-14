@@ -12,30 +12,30 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity: FlutterActivity() {
-    private val NOTIFICATION_CHANNEL = "com.example.falldetectionn1/notification"
+ //   private val NOTIFICATION_CHANNEL = "com.example.falldetectionn1/notification"
     private val SERVICE_CHANNEL = "com.example.falldetectionn1/service"
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
         // Notification Method Channel
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, NOTIFICATION_CHANNEL).setMethodCallHandler { call, result ->
-            if (call.method == "showNotification") {
-                val prediction = call.argument<String>("prediction")
-                val timestamp = call.argument<String>("timestamp")
+        // MethodChannel(flutterEngine.dartExecutor.binaryMessenger, NOTIFICATION_CHANNEL).setMethodCallHandler { call, result ->
+        //     if (call.method == "showNotification") {
+        //         val prediction = call.argument<String>("prediction")
+        //         val timestamp = call.argument<String>("timestamp")
                 
-                // Trigger the AlarmReceiver to show the notification
-                val intent = Intent(this, AlarmReceiver::class.java).apply {
-                    action = "com.example.falldetectionn1.ALARM_TRIGGERED"
-                    putExtra("prediction", prediction)
-                    putExtra("timestamp", timestamp)
-                }
-                sendBroadcast(intent)
-                result.success(null)
-            } else {
-                result.notImplemented()
-            }
-        }
+        //         // Trigger the AlarmReceiver to show the notification
+        //         val intent = Intent(this, AlarmReceiver::class.java).apply {
+        //             action = "com.example.falldetectionn1.ALARM_TRIGGERED"
+        //             putExtra("prediction", prediction)
+        //             putExtra("timestamp", timestamp)
+        //         }
+        //         sendBroadcast(intent)
+        //         result.success(null)
+        //     } else {
+        //         result.notImplemented()
+        //     }
+        // }
 
         // Service and Battery Optimization Method Channel
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, SERVICE_CHANNEL).setMethodCallHandler { call, result ->

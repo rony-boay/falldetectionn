@@ -3,20 +3,16 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
-import 'package:flutter/services.dart';
 import 'knn.dart';
 
 class NotificationService {
   final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
-  final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
   final KNN _knnModel = KNN();
   StreamSubscription? _sensorDataSubscription;
+  Timer? _fallDetectionResetTimer;
   Timer? _notificationDelayTimer;
-  bool _isNotificationScheduled = false;
-
-  static const platform = MethodChannel('com.example.falldetectionn1/notification');
+  bool _canSendNotification = true;
 
   NotificationService() {
     _initializeNotifications();
@@ -25,15 +21,12 @@ class NotificationService {
   }
 
   static Future<void> init() async {
-    await AndroidAlarmManager.initialize(); // Initialize the AlarmManager
     final NotificationService _notificationService = NotificationService();
   }
 
   void _initializeNotifications() {
-    final AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    final InitializationSettings initializationSettings =
-        InitializationSettings(
+    final AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    final InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
     );
     _notificationsPlugin.initialize(initializationSettings);
@@ -53,18 +46,15 @@ class NotificationService {
   }
 
   void _fetchSensorData() {
-    _sensorDataSubscription =
-        _databaseReference.child('max30100/data').onValue.listen((event) {
+    _sensorDataSubscription = _databaseReference.child('max30100/data').onValue.listen((event) {
       if (event.snapshot.value != null) {
-        Map<dynamic, dynamic> max30100Data =
-            event.snapshot.value as Map<dynamic, dynamic>;
+        Map<dynamic, dynamic> max30100Data = event.snapshot.value as Map<dynamic, dynamic>;
         int irValue = max30100Data['irValue'];
         int redValue = max30100Data['redValue'];
 
         _databaseReference.child('mpu6050/data').onValue.listen((mpuEvent) {
           if (mpuEvent.snapshot.value != null) {
-            Map<dynamic, dynamic> mpuData =
-                mpuEvent.snapshot.value as Map<dynamic, dynamic>;
+            Map<dynamic, dynamic> mpuData = mpuEvent.snapshot.value as Map<dynamic, dynamic>;
             double ax = mpuData['ax'].toDouble();
             double ay = mpuData['ay'].toDouble();
             double az = mpuData['az'].toDouble();
@@ -86,21 +76,20 @@ class NotificationService {
   }
 
   void _handleFallDetection(String prediction, List<double> featureData) {
-    if (prediction == 'Accidental Fall' || prediction == 'Natural Fall') {
-      if (!_isNotificationScheduled) {
-        _isNotificationScheduled = true;
-        scheduleNotification(prediction);
+    if ((prediction == 'Accidental Fall' || prediction == 'Natural Fall') && _canSendNotification) {
+      scheduleNotification(prediction);
+      _canSendNotification = false;
+      _startNotificationDelayTimer();
 
-        // Add fall data to KNN model for retraining
-        _knnModel.addFallData(featureData, prediction);
-
-        // Reset timer to allow notifications after 5 seconds
-        _notificationDelayTimer?.cancel();
-        _notificationDelayTimer = Timer(Duration(seconds: 5), () {
-          _isNotificationScheduled = false;
-        });
-      }
+      // Add fall data to KNN model for retraining
+      _knnModel.addFallData(featureData, prediction);
     }
+  }
+
+  void _startNotificationDelayTimer() {
+    _notificationDelayTimer = Timer(Duration(seconds: 5), () {
+      _canSendNotification = true;
+    });
   }
 
   Future<void> scheduleNotification(String prediction) async {
@@ -115,32 +104,25 @@ class NotificationService {
         'timestamp': timestamp,
       });
 
-      // Schedule the alarm
-      await AndroidAlarmManager.oneShot(
-        Duration(seconds: 1), // Alarm delay
-        0, // Alarm ID
-        _showNotification,
-        exact: true,
-        wakeup: true,
-        rescheduleOnReboot: true,
-        params: <String, dynamic>{
-          "prediction": prediction,
-          "timestamp": timestamp,
-        },
+      var androidDetails = AndroidNotificationDetails(
+        'channelId',
+        'channelName',
+        importance: Importance.max,
       );
-    }
-  }
+      var generalNotificationDetails = NotificationDetails(android: androidDetails);
 
-  static Future<void> _showNotification(Map<String, dynamic> params) async {
-    try {
-      await platform.invokeMethod('showNotification', params);
-    } on PlatformException catch (e) {
-      print("Failed to trigger notification: '${e.message}'.");
+      await _notificationsPlugin.show(
+        DateTime.now().millisecondsSinceEpoch % 100000, // Ensures a unique notification ID
+        'Fall Detected: $prediction',
+        'Timestamp: $timestamp',
+        generalNotificationDetails,
+      );
     }
   }
 
   void dispose() {
     _sensorDataSubscription?.cancel();
+    _fallDetectionResetTimer?.cancel();
     _notificationDelayTimer?.cancel();
   }
 }
