@@ -17,29 +17,17 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -53,11 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDLBW27lcCS5ytMUpTdkIxJC95jCx7pDpE',
-    appId: '1:981043594373:android:3604cfe50a7f4a2d0455ec',
-    messagingSenderId: '981043594373',
-    projectId: 'attendance-management-sy-50147',
-    databaseURL: 'https://attendance-management-sy-50147-default-rtdb.firebaseio.com',
-    storageBucket: 'attendance-management-sy-50147.appspot.com',
+    apiKey: 'AIzaSyDQK_Bdq1ZkjIHr8wIPFPP7-C3HEpcW8Ac',
+    appId: '1:723162991686:android:af664fbc87d29a8260ce47',
+    messagingSenderId: '723162991686',
+    projectId: 'falldetection-a2d3b',
+    storageBucket: 'falldetection-a2d3b.appspot.com',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDcE3_z1mkuSXHNobbOO-Iu94XYv4uudtI',
+    appId: '1:723162991686:web:79ef991c539d5cb960ce47',
+    messagingSenderId: '723162991686',
+    projectId: 'falldetection-a2d3b',
+    authDomain: 'falldetection-a2d3b.firebaseapp.com',
+    storageBucket: 'falldetection-a2d3b.appspot.com',
+    measurementId: 'G-0P9EP7BY44',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBsa_Gy6-CJck7EYl-Zj181v4uzwG00Uas',
+    appId: '1:723162991686:ios:ac17b287f898803660ce47',
+    messagingSenderId: '723162991686',
+    projectId: 'falldetection-a2d3b',
+    storageBucket: 'falldetection-a2d3b.appspot.com',
+    iosBundleId: 'com.example.falldetectionn1',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBsa_Gy6-CJck7EYl-Zj181v4uzwG00Uas',
+    appId: '1:723162991686:ios:ac17b287f898803660ce47',
+    messagingSenderId: '723162991686',
+    projectId: 'falldetection-a2d3b',
+    storageBucket: 'falldetection-a2d3b.appspot.com',
+    iosBundleId: 'com.example.falldetectionn1',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDcE3_z1mkuSXHNobbOO-Iu94XYv4uudtI',
+    appId: '1:723162991686:web:17f60cc1f212d33760ce47',
+    messagingSenderId: '723162991686',
+    projectId: 'falldetection-a2d3b',
+    authDomain: 'falldetection-a2d3b.firebaseapp.com',
+    storageBucket: 'falldetection-a2d3b.appspot.com',
+    measurementId: 'G-3T2GM6ZRR2',
+  );
+
 }

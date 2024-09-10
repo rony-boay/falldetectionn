@@ -1,33 +1,13 @@
 {
   "project_info": {
-    "project_number": "981043594373",
-    "firebase_url": "https://attendance-management-sy-50147-default-rtdb.firebaseio.com",
-    "project_id": "attendance-management-sy-50147",
-    "storage_bucket": "attendance-management-sy-50147.appspot.com"
+    "project_number": "723162991686",
+    "project_id": "falldetection-a2d3b",
+    "storage_bucket": "falldetection-a2d3b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:981043594373:android:8705cfb30993914e0455ec",
-        "android_client_info": {
-          "package_name": "com.example.attendance_management_system"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDLBW27lcCS5ytMUpTdkIxJC95jCx7pDpE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:981043594373:android:3604cfe50a7f4a2d0455ec",
+        "mobilesdk_app_id": "1:723162991686:android:af664fbc87d29a8260ce47",
         "android_client_info": {
           "package_name": "com.example.falldetectionn1"
         }
@@ -35,45 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDLBW27lcCS5ytMUpTdkIxJC95jCx7pDpE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:981043594373:android:5d93a298bdde3e920455ec",
-        "android_client_info": {
-          "package_name": "com.example.flutter_application_1"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDLBW27lcCS5ytMUpTdkIxJC95jCx7pDpE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:981043594373:android:1927b469102bac5f0455ec",
-        "android_client_info": {
-          "package_name": "example.com.geo_attendance_system"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDLBW27lcCS5ytMUpTdkIxJC95jCx7pDpE"
+          "current_key": "AIzaSyDQK_Bdq1ZkjIHr8wIPFPP7-C3HEpcW8Ac"
         }
       ],
       "services": {
